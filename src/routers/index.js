@@ -1,7 +1,15 @@
 import express from 'express';
 
-const routes = express.Router();
+import companiesRouter from './companiesRouter.js';
+import productsRouter from './productsRouter.js';
+import salesRouter from './salesRouter.js';
+import cashflowRouter from './cashflowRouter.js';
 
-// app.use();
+const router = express.Router();
 
-export default routes;
+router.use(companiesRouter);
+router.use(productsRouter);
+router.use(salesRouter);
+router.use(cashflowRouter);
+
+export default router;

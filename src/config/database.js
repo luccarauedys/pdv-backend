@@ -11,6 +11,6 @@ const databaseConfig = {
   },
 };
 
-const database = new Pool(databaseConfig);
+const db = new Pool(databaseConfig);
 
-export default database;
+export default db;
