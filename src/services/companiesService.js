@@ -20,7 +20,7 @@ export async function registerCompany(companyData) {
   }
 
   const company = await companiesRepository.findByEmail(email);
-  if (company) throw conflictError('This company is already registered!');
+  if (company) throw conflictError('Essa empresa já está cadastrada!');
 
   const encryptedPassword = bcrypt.hashSync(password, 10);
   return await companiesRepository.insertOne({ name, email, encryptedPassword });
@@ -38,10 +38,10 @@ export async function login(companyData) {
 
   const company = await companiesRepository.findByEmail(email);
 
-  if (!company) throw notFoundError('Company does not exist. Create a new account!');
+  if (!company) throw notFoundError('Essa empresa não está cadastrada. Crie uma conta!');
 
   if (!bcrypt.compareSync(password, company.password))
-    throw unauthorizedError('Invalid credentials!');
+    throw unauthorizedError('Credenciais inválidas!');
 
   const token = jwt.sign({ companyId: company.id }, process.env.JWT_SECRET_KEY, {
     expiresIn: '1d',

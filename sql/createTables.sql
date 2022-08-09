@@ -2,33 +2,31 @@ CREATE TABLE "companies"(
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR NOT NULL,
 	"email" VARCHAR UNIQUE NOT NULL,
-	"password" VARCHAR NOT NULL,
-	"createdAt" DATE NOT NULL DEFAULT NOW()
+	"password" VARCHAR NOT NULL
 );
 
 CREATE TABLE "products"(
 	"id" SERIAL PRIMARY KEY,
-	"companyId" INTEGER REFERENCES "companies"(id),
+	"companyId" INTEGER NOT NULL REFERENCES "companies"(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	"name" VARCHAR NOT NULL,
 	"quantity" INTEGER NOT NULL,
-	"costPrice" INTEGER NOT NULL,
-	"sellingPrice" INTEGER NOT NULL
+	"costPrice" FLOAT NOT NULL,
+	"sellingPrice" FLOAT NOT NULL
 );
 
 CREATE TABLE "sales"(
 	"id" SERIAL PRIMARY KEY,
-	"companyId" INTEGER REFERENCES "companies"(id),
-	"productId" INTEGER REFERENCES "products"(id),
+	"companyId" INTEGER NOT NULL REFERENCES "companies"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	"productId" INTEGER NOT NULL REFERENCES "products"(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	"quantity" INTEGER NOT NULL,
-	"totalPrice" INTEGER NOT NULL,
-	"dateOfSale" DATE NOT NULL DEFAULT NOW()	
+	"totalPrice" FLOAT NOT NULL,
+	"date" DATE NOT NULL DEFAULT NOW()	
 );
 
-CREATE TABLE "cashflow"(
+CREATE TABLE "expenses"(
 	"id" SERIAL PRIMARY KEY,
-	"companyId" INTEGER REFERENCES "companies"(id),
-	"type" VARCHAR NOT NULL,
+	"companyId" INTEGER NOT NULL REFERENCES "companies"(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	"description" VARCHAR NOT NULL,
-	"value" INTEGER NOT NULL,
+	"totalPrice" FLOAT NOT NULL,
 	"date" DATE NOT NULL DEFAULT NOW()
 );
