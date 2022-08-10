@@ -2,12 +2,7 @@ import * as productsRepository from '../repositories/productsRepository.js';
 import * as companiesRepository from '../repositories/companiesRepository.js';
 import { productSchema } from '../schemas/productSchema.js';
 import { validateSchema } from '../utils/schemaValidation.js';
-import {
-  wrongSchemaError,
-  conflictError,
-  notFoundError,
-  unauthorizedError,
-} from '../utils/errorUtils.js';
+import { conflictError, notFoundError } from '../utils/errorUtils.js';
 
 export async function createProduct(productData) {
   const { name, companyId } = productData;
@@ -29,9 +24,23 @@ export async function getProductsByName(name, companyId) {
   return await productsRepository.findByName(name, companyId);
 }
 
-export async function updateProduct() {}
+export async function updateProduct(productId, companyId, dataToUpdate) {
+  await checkIfCompanyExists(companyId);
 
-export async function deleteProduct() {}
+  const product = await productsRepository.findById(productId, companyId);
+  if (!product) throw notFoundError('Produto não encontrado!');
+
+  return await productsRepository.updateOne(productId, companyId, dataToUpdate);
+}
+
+export async function deleteProduct(productId, companyId) {
+  await checkIfCompanyExists(companyId);
+
+  const product = await productsRepository.findById(productId, companyId);
+  if (!product) throw notFoundError('Produto não encontrado!');
+
+  return await productsRepository.deleteOne(productId, companyId);
+}
 
 async function checkIfCompanyExists(companyId) {
   const company = await companiesRepository.findById(companyId);

@@ -9,10 +9,7 @@ export async function createProduct(req, res) {
 export async function getProducts(req, res) {
   const { name, companyId } = req.body;
 
-  console.log(name);
-
   let products = [];
-
   if (name) {
     products = await productsService.getProductsByName(name, companyId);
   } else {
@@ -22,6 +19,16 @@ export async function getProducts(req, res) {
   res.status(200).send(products);
 }
 
-export async function updateProduct(req, res) {}
+export async function updateProduct(req, res) {
+  const { companyId, dataToUpdate } = req.body;
+  const { id: productId } = req.params;
+  await productsService.updateProduct(productId, companyId, dataToUpdate);
+  res.sendStatus(200);
+}
 
-export async function deleteProduct(req, res) {}
+export async function deleteProduct(req, res) {
+  const { companyId } = req.body;
+  const { id: productId } = req.params;
+  await productsService.deleteProduct(productId, companyId);
+  res.sendStatus(200);
+}

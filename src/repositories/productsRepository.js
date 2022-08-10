@@ -34,9 +34,9 @@ export async function findAll(companyId) {
   return result.rows;
 }
 
-export async function updateOne(id, companyId, productData) {
+export async function updateOne(productId, companyId, dataToUpdate) {
   const { objectColumns, objectValues } = mapObjectToUpdateQuery({
-    object: productData,
+    object: dataToUpdate,
     offset: 3,
   });
 
@@ -46,13 +46,13 @@ export async function updateOne(id, companyId, productData) {
     SET ${objectColumns}
   WHERE "id" = $1 AND "companyId" = $2
   `,
-    [id, companyId, ...objectValues]
+    [productId, companyId, ...objectValues]
   );
 }
 
-export async function deleteOne(id, companyId) {
+export async function deleteOne(productId, companyId) {
   return await db.query('DELETE FROM products WHERE "id" = $1 AND "companyId" = $2', [
-    id,
+    productId,
     companyId,
   ]);
 }
