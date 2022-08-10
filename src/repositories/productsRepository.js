@@ -11,11 +11,14 @@ export async function insertOne(productData) {
 }
 
 export async function findByName(name, companyId) {
-  const result = await db.query(
+  const nameFilter = `${name}%`;
+
+  const { rows } = await db.query(
     'SELECT * FROM products WHERE "name" ILIKE $1 AND "companyId" = $2',
-    [name, companyId]
+    [nameFilter, companyId]
   );
-  return result.rows;
+
+  return rows;
 }
 
 export async function findById(id, companyId) {

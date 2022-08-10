@@ -2,8 +2,7 @@ import express from 'express';
 import { verifyJWT } from '../middlewares/tokenMiddleware.js';
 import {
   createProduct,
-  getAllProducts,
-  getProduct,
+  getProducts,
   updateProduct,
   deleteProduct,
 } from '../controllers/productsController.js';
@@ -13,8 +12,7 @@ const productsRouter = express.Router();
 productsRouter.use(verifyJWT);
 
 productsRouter.post('/products', createProduct);
-productsRouter.get('/products', getAllProducts);
-productsRouter.get('/products/:id', getProduct);
+productsRouter.get('/products', getProducts);
 productsRouter.put('/products/:id', updateProduct);
 productsRouter.delete('/products/:id', deleteProduct);
 

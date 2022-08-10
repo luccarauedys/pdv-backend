@@ -6,9 +6,21 @@ export async function createProduct(req, res) {
   res.sendStatus(201);
 }
 
-export async function getAllProducts(req, res) {}
+export async function getProducts(req, res) {
+  const { name, companyId } = req.body;
 
-export async function getProduct(req, res) {}
+  console.log(name);
+
+  let products = [];
+
+  if (name) {
+    products = await productsService.getProductsByName(name, companyId);
+  } else {
+    products = await productsService.getAllProducts(companyId);
+  }
+
+  res.status(200).send(products);
+}
 
 export async function updateProduct(req, res) {}
 
