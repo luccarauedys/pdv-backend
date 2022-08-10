@@ -5,9 +5,10 @@ import { saleSchema } from '../schemas/saleSchema.js';
 import { notFoundError } from '../utils/errorUtils.js';
 
 export async function createSale(saleData) {
+  const { companyId, productId } = saleData;
+
   validateSchema(saleSchema, saleData);
 
-  const { companyId, productId } = saleData;
   const product = await productsRepository.findById(productId, companyId);
   if (!product) throw notFoundError('Produto não encontrado!');
 

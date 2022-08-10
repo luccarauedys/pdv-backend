@@ -1,5 +1,8 @@
 import express from 'express';
+
 import { verifyJWT } from '../middlewares/tokenMiddleware.js';
+import { checkIfCompanyExists } from '../middlewares/companyValidationMiddleware.js';
+
 import {
   createProduct,
   getProducts,
@@ -10,10 +13,11 @@ import {
 const productsRouter = express.Router();
 
 productsRouter.use(verifyJWT);
+productsRouter.use(checkIfCompanyExists);
 
 productsRouter.post('/products', createProduct);
 productsRouter.get('/products', getProducts);
-productsRouter.put('/products/:id', updateProduct);
-productsRouter.delete('/products/:id', deleteProduct);
+productsRouter.put('/products/:productId', updateProduct);
+productsRouter.delete('/products/:productId', deleteProduct);
 
 export default productsRouter;

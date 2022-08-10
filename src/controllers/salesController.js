@@ -14,7 +14,7 @@ export async function getSales(req, res) {
 
 export async function deleteSale(req, res) {
   const { companyId } = req.body;
-  const { id: saleId } = req.params;
+  const { saleId } = req.params;
   await salesService.deleteSale(saleId, companyId);
   res.sendStatus(200);
 }
