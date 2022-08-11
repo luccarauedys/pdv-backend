@@ -34,3 +34,7 @@ export async function login(companyData) {
 
   return token;
 }
+
+export async function getAllData(companyId) {
+  return await companiesRepository.findCompanyData(companyId);
+}

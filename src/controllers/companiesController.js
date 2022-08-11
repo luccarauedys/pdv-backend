@@ -11,3 +11,9 @@ export async function login(req, res) {
   const token = await companiesService.login(loginData);
   res.status(200).send({ token });
 }
+
+export async function getAllCompanyData(req, res) {
+  const { companyId } = req.params;
+  const companyData = await companiesService.getAllData(companyId);
+  res.status(200).send(companyData);
+}
