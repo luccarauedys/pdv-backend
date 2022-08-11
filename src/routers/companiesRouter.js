@@ -7,6 +7,6 @@ const companiesRouter = express.Router();
 
 companiesRouter.post('/companies/register', registerCompany);
 companiesRouter.post('/companies/login', login);
-companiesRouter.get('/companies', checkIfCompanyExists, verifyJWT, getAllCompanyData);
+companiesRouter.get('/companies', verifyJWT, checkIfCompanyExists, getAllCompanyData);
 
 export default companiesRouter;
