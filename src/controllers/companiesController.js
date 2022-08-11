@@ -13,7 +13,7 @@ export async function login(req, res) {
 }
 
 export async function getAllCompanyData(req, res) {
-  const { companyId } = req.params;
+  const { companyId } = res.locals;
   const companyData = await companiesService.getAllData(companyId);
   res.status(200).send(companyData);
 }
