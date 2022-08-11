@@ -1,6 +1,8 @@
 import express from 'express';
-import { checkIfCompanyExists } from '../middlewares/companyValidationMiddleware.js';
+
 import { verifyJWT } from '../middlewares/tokenMiddleware.js';
+import { checkIfCompanyExists } from '../middlewares/companyValidationMiddleware.js';
+
 import { registerCompany, login, getAllCompanyData } from '../controllers/companiesController.js';
 
 const companiesRouter = express.Router();

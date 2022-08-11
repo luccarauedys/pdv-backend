@@ -7,7 +7,8 @@ export async function createProduct(req, res) {
 }
 
 export async function getProducts(req, res) {
-  const { name, companyId } = req.body;
+  const { name } = req.body;
+  const { companyId } = res.locals;
 
   let products = [];
   if (name) {
@@ -20,14 +21,15 @@ export async function getProducts(req, res) {
 }
 
 export async function updateProduct(req, res) {
-  const { companyId, dataToUpdate } = req.body;
+  const { dataToUpdate } = req.body;
   const { productId } = req.params;
+  const { companyId } = res.locals;
   await productsService.updateProduct(productId, companyId, dataToUpdate);
   res.sendStatus(200);
 }
 
 export async function deleteProduct(req, res) {
-  const { companyId } = req.body;
+  const { companyId } = res.locals;
   const { productId } = req.params;
   await productsService.deleteProduct(productId, companyId);
   res.sendStatus(200);
