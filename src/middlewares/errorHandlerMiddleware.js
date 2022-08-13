@@ -1,8 +1,6 @@
-import { isAppError, errorTypeToStatusCode } from '../utils/errorUtils.js';
+import { isAppError, errorTypeToStatusCode } from "../utils/errorUtils.js";
 
-export default function errorHandlerMiddleware(error, request, response, next) {
-  console.log(error);
-
+export default function errorHandlerMiddleware(error, _request, response, _next) {
   if (isAppError(error)) {
     return response.status(errorTypeToStatusCode(error.type)).send(error.message);
   }

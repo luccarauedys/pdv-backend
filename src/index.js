@@ -1,15 +1,5 @@
-import express from 'express';
-import 'express-async-errors';
-import cors from 'cors';
-import dotenv from 'dotenv';
-dotenv.config();
+import app from "./app.js";
 
-import router from './routers/index.js';
-import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware.js';
-
-const app = express().use(express.json()).use(cors());
-
-app.use(router);
-app.use(errorHandlerMiddleware);
-
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || 5000, () => {
+  console.log("Server is up and running on PORT 5000");
+});

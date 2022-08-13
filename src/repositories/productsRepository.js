@@ -1,52 +1,50 @@
-import db from '../config/database.js';
-import { mapObjectToUpdateQuery } from '../utils/sqlUtils.js';
+import db from "../config/database.js";
 
-export async function insertOne(productData) {
-  const { name, quantity, costPrice, sellingPrice, companyId } = productData;
-
+export async function insertOne({ name, stock, costPrice, sellingPrice, companyId }) {
   return await db.query(
-    'INSERT INTO products ("name", "quantity", "costPrice", "sellingPrice", "companyId") VALUES ($1, $2, $3, $4, $5) RETURNING id',
-    [name, quantity, costPrice, sellingPrice, companyId]
+    'INSERT INTO products ("name", "stock", "costPrice", "sellingPrice", "companyId") VALUES ($1, $2, $3, $4, $5)',
+    [name, stock, costPrice, sellingPrice, companyId]
   );
 }
 
 export async function findByName(name, companyId) {
   const nameFilter = `${name}%`;
 
-  const { rows } = await db.query(
+  const result = await db.query(
     'SELECT * FROM products WHERE "name" ILIKE $1 AND "companyId" = $2',
     [nameFilter, companyId]
   );
 
-  return rows;
+  return result.rows;
 }
 
-export async function findById(id, companyId) {
+export async function findById(productId, companyId) {
   const result = await db.query('SELECT * FROM products WHERE "id" = $1 AND "companyId" = $2', [
-    id,
+    productId,
     companyId,
   ]);
+
   return result.rows[0];
 }
 
 export async function findAll(companyId) {
-  const result = await db.query('SELECT * FROM products WHERE "companyId" = $1', [companyId]);
+  const result = await db.query(
+    'SELECT * FROM products WHERE products."companyId" = $1 ORDER BY "name" ASC',
+    [companyId]
+  );
   return result.rows;
 }
 
-export async function updateOne(productId, companyId, dataToUpdate) {
-  const { objectColumns, objectValues } = mapObjectToUpdateQuery({
-    object: dataToUpdate,
-    offset: 3,
-  });
+export async function updateOne(productData) {
+  const { id: productId, name, stock, costPrice, sellingPrice, companyId } = productData;
 
   return await db.query(
     `
-  UPDATE products
-    SET ${objectColumns}
-  WHERE "id" = $1 AND "companyId" = $2
+  UPDATE products 
+  SET "name" = $1, "stock" = $2, "costPrice" = $3, "sellingPrice" = $4 
+  WHERE "id" = $5 AND "companyId" = $6
   `,
-    [productId, companyId, ...objectValues]
+    [name, stock, costPrice, sellingPrice, productId, companyId]
   );
 }
 

@@ -1,11 +1,11 @@
-import * as companiesRepository from '../repositories/companiesRepository.js';
-import { notFoundError } from '../utils/errorUtils.js';
+import * as companiesRepository from "../repositories/companiesRepository.js";
+import { notFoundError } from "../utils/errorUtils.js";
 
-export async function checkIfCompanyExists(req, res, next) {
+export async function checkIfCompanyExists(_req, res, next) {
   const { companyId } = res.locals;
 
   const company = await companiesRepository.findById(companyId);
-  if (!company) throw notFoundError('Essa empresa não está cadastrada!');
+  if (!company) throw notFoundError("Essa empresa não está cadastrada!");
 
   next();
 }

@@ -9,7 +9,7 @@ CREATE TABLE "products"(
 	"id" SERIAL PRIMARY KEY,
 	"companyId" INTEGER NOT NULL REFERENCES "companies"(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	"name" VARCHAR NOT NULL,
-	"quantity" INTEGER NOT NULL,
+	"stock" INTEGER NOT NULL,
 	"costPrice" FLOAT NOT NULL,
 	"sellingPrice" FLOAT NOT NULL
 );
@@ -27,6 +27,6 @@ CREATE TABLE "expenses"(
 	"id" SERIAL PRIMARY KEY,
 	"companyId" INTEGER NOT NULL REFERENCES "companies"(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	"description" VARCHAR NOT NULL,
-	"totalPrice" FLOAT NOT NULL,
+	"value" FLOAT NOT NULL,
 	"date" DATE NOT NULL DEFAULT NOW()
 );

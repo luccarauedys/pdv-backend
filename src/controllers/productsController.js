@@ -1,4 +1,4 @@
-import * as productsService from '../services/productsService.js';
+import * as productsService from "../services/productsService.js";
 
 export async function createProduct(req, res) {
   const productData = req.body;
@@ -7,10 +7,11 @@ export async function createProduct(req, res) {
 }
 
 export async function getProducts(req, res) {
-  const { name } = req.body;
   const { companyId } = res.locals;
+  const { name } = req.query;
 
   let products = [];
+
   if (name) {
     products = await productsService.getProductsByName(name, companyId);
   } else {
@@ -21,10 +22,8 @@ export async function getProducts(req, res) {
 }
 
 export async function updateProduct(req, res) {
-  const { dataToUpdate } = req.body;
-  const { productId } = req.params;
-  const { companyId } = res.locals;
-  await productsService.updateProduct(productId, companyId, dataToUpdate);
+  const productData = req.body;
+  await productsService.updateProduct(productData);
   res.sendStatus(200);
 }
 
