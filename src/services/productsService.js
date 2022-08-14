@@ -3,13 +3,14 @@ import { productSchema } from "../schemas/productSchema.js";
 import { validateSchema } from "../utils/schemaValidation.js";
 import { conflictError, notFoundError } from "../utils/errorUtils.js";
 
-export async function createProduct(productData) {
+export async function createProduct(productData, companyId) {
   validateSchema(productSchema, productData);
 
-  const { name, companyId } = productData;
+  const { name } = productData;
+
   await checkIfProductExists({ name, companyId, action: "create" });
 
-  return await productsRepository.insertOne(productData);
+  return await productsRepository.insertOne(productData, companyId);
 }
 
 export async function getAllProducts(companyId) {
@@ -20,11 +21,12 @@ export async function getProductsByName(name, companyId) {
   return await productsRepository.findByName(name, companyId);
 }
 
-export async function updateProduct(productData) {
-  const { id: productId, companyId } = productData;
+export async function updateProduct(productData, companyId) {
+  const productId = productData.id;
+
   await checkIfProductExists({ productId, companyId, action: "update" });
 
-  return await productsRepository.updateOne(productData);
+  return await productsRepository.updateOne(productData, companyId);
 }
 
 export async function deleteProduct(productId, companyId) {

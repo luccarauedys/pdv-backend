@@ -1,6 +1,8 @@
 import db from "../config/database.js";
 
-export async function insertOne({ name, stock, costPrice, sellingPrice, companyId }) {
+export async function insertOne(productData, companyId) {
+  const { name, stock, costPrice, sellingPrice } = productData;
+
   return await db.query(
     'INSERT INTO products ("name", "stock", "costPrice", "sellingPrice", "companyId") VALUES ($1, $2, $3, $4, $5)',
     [name, stock, costPrice, sellingPrice, companyId]
@@ -35,8 +37,8 @@ export async function findAll(companyId) {
   return result.rows;
 }
 
-export async function updateOne(productData) {
-  const { id: productId, name, stock, costPrice, sellingPrice, companyId } = productData;
+export async function updateOne(productData, companyId) {
+  const { id, name, stock, costPrice, sellingPrice } = productData;
 
   return await db.query(
     `
@@ -44,7 +46,7 @@ export async function updateOne(productData) {
   SET "name" = $1, "stock" = $2, "costPrice" = $3, "sellingPrice" = $4 
   WHERE "id" = $5 AND "companyId" = $6
   `,
-    [name, stock, costPrice, sellingPrice, productId, companyId]
+    [name, stock, costPrice, sellingPrice, id, companyId]
   );
 }
 

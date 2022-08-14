@@ -14,9 +14,8 @@ export async function findByEmail(email) {
 }
 
 export async function findById(companyId) {
-  const result = await db.query("SELECT id, name FROM companies WHERE companies.id = $1", [
+  const result = await db.query("SELECT id, name, email FROM companies WHERE companies.id = $1", [
     companyId,
   ]);
-
   return result.rows[0];
 }
