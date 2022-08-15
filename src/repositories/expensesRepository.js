@@ -1,9 +1,9 @@
 import db from "../config/database.js";
 
-export async function insertOne({ companyId, description, value }) {
+export async function insertOne({ companyId, description, value, date }) {
   return await db.query(
-    'INSERT INTO expenses ("companyId", "description", "value") VALUES ($1, $2, $3)',
-    [companyId, description, value]
+    'INSERT INTO expenses ("companyId", "description", "value", "date") VALUES ($1, $2, $3, $4)',
+    [companyId, description, value, date]
   );
 }
 
@@ -25,11 +25,11 @@ export async function findAll(companyId) {
 }
 
 export async function updateOne(expenseId, companyId, expenseData) {
-  const { description, value } = expenseData;
+  const { description, value, date } = expenseData;
 
   return await db.query(
-    'UPDATE expenses SET "description" = $1, "value" = $2 WHERE id = $3 AND "companyId" = $4',
-    [description, value, expenseId, companyId]
+    'UPDATE expenses SET "description" = $1, "value" = $2, "date" = $3 WHERE id = $4 AND "companyId" = $5',
+    [description, value, date, expenseId, companyId]
   );
 }
 

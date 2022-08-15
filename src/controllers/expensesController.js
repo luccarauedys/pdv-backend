@@ -2,7 +2,9 @@ import * as expensesService from "../services/expensesService.js";
 
 export async function createExpense(req, res) {
   const expenseData = req.body;
-  await expensesService.createExpense(expenseData);
+  const { companyId } = res.locals;
+
+  await expensesService.createExpense(expenseData, companyId);
   res.sendStatus(201);
 }
 

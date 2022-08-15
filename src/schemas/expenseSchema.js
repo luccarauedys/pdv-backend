@@ -5,5 +5,5 @@ export const expenseSchema = Joi.object({
   companyId: Joi.number().required(),
   description: Joi.string().required(),
   value: Joi.number().required(),
-  date: Joi.date().iso().optional(),
+  date: Joi.date().iso().required(),
 });

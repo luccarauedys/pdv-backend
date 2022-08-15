@@ -16,13 +16,6 @@ export async function getProducts(req, res) {
     ? await productsService.getProductsByName(name, companyId)
     : await productsService.getAllProducts(companyId);
 
-  // let products = [];
-  // if (name) {
-  //   products = await productsService.getProductsByName(name, companyId);
-  // } else {
-  //   products = await productsService.getAllProducts(companyId);
-  // }
-
   res.status(200).send(products);
 }
 

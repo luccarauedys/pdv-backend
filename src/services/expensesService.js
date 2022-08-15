@@ -1,9 +1,11 @@
 import * as expensesRepository from "../repositories/expensesRepository.js";
+import { validateSchema } from "../utils/schemaValidation.js";
 import { expenseSchema } from "../schemas/expenseSchema.js";
 
-export async function createExpense(expenseData) {
-  validateSchema(expenseSchema, expenseData);
-  return await expensesRepository.insertOne(expenseData);
+export async function createExpense(expenseData, companyId) {
+  const expense = { ...expenseData, companyId };
+  validateSchema(expenseSchema, { ...expenseData, companyId });
+  return await expensesRepository.insertOne(expense);
 }
 
 export async function getExpenses(companyId) {
